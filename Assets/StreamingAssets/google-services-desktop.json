@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "819468723793",
+    "firebase_url": "https://happy-glass-66b71.firebaseio.com",
+    "project_id": "happy-glass-66b71",
+    "storage_bucket": "happy-glass-66b71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819468723793:android:9b71db0b00708f5f54fa70",
+        "android_client_info": {
+          "package_name": "com.star.shooter.spaceship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819468723793-gv8p7v4l88eup3vb5lbj5n2f1cnhvab0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDABb7tiggRQKlulc38N-nJvrrz5Z2mS28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819468723793-gv8p7v4l88eup3vb5lbj5n2f1cnhvab0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
