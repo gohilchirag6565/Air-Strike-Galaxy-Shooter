@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using UnityEngine;
@@ -50,3 +51,4 @@ public class RewardedAdsMediation : MonoBehaviour
         OnRewarded.Invoke();
     }
 }
+*/

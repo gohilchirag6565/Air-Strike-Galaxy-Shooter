@@ -30,7 +30,7 @@ public class DailyRewardUI : MonoBehaviour
             if (DailyRewardController.Instance.CanRewardNow())
             {
 				
-                if(AdmobBannerController.Instance.rewardBasedVideo.IsLoaded())
+                if(Advertisements.Instance.IsRewardVideoAvailable())
                     dailyRewardBtnText.text = "CLAIM";
                 dailyRewardAnimator.SetTrigger("activate");
                 DailyRewardBtn.interactable = true;
@@ -85,7 +85,7 @@ public class DailyRewardUI : MonoBehaviour
     public void GrabDailyReward()
     {
 		
-		if (DailyRewardController.Instance.CanRewardNow () && AdmobBannerController.Instance.rewardBasedVideo.IsLoaded() /*Advertisement.IsReady ("rewardedVideo")*/) 
+		if (DailyRewardController.Instance.CanRewardNow () && Advertisements.Instance.IsRewardVideoAvailable() /*Advertisement.IsReady ("rewardedVideo")*/) 
 		{
 
 			dailyRewardBtn.SetActive (false);

@@ -18,7 +18,7 @@ public class SpinWheelController : MonoBehaviour
 			SpinNormal.SetActive (false);
 			SpinAfterWatchAds.SetActive (true);
 
-            if(AdmobBannerController.Instance.rewardBasedVideo.IsLoaded())
+            if(Advertisements.Instance.IsRewardVideoAvailable())
             {
                 SpinAfterWatchAds1.interactable = true;
             }

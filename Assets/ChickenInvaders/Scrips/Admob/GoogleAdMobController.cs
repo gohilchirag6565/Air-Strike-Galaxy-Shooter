@@ -1,4 +1,4 @@
-using UnityEngine.Events;
+/*using UnityEngine.Events;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
@@ -622,8 +622,8 @@ public class GoogleAdMobController : MonoBehaviour
         MobileAdsEventExecutor.ExecuteInUpdate(() => {
             Debug.Log(message);
         });
-    }*/
+    }#1#
 
     #endregion
     
-}
+}*/

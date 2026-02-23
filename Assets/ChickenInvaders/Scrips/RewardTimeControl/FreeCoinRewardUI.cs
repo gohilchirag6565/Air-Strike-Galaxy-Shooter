@@ -33,8 +33,7 @@ public class FreeCoinRewardUI : MonoBehaviour
         CountNumAds.text = "" + DataManager.Instance.FreeAdNumber;
         if (!DailyRewardController1.Instance.disable && dailyRewardBtn.gameObject.activeSelf)
         {
-            if (DailyRewardController1.Instance.CanRewardNow() &&
-                AdmobBannerController.Instance.rewardBasedVideo.IsLoaded())
+            if (DailyRewardController1.Instance.CanRewardNow() && Advertisements.Instance.IsRewardVideoAvailable())
             {
                 dailyRewardBtnText.text = "ACTIVE";
                 dailyRewardAnimator.SetTrigger("activate");
@@ -49,8 +48,7 @@ public class FreeCoinRewardUI : MonoBehaviour
                 FreeCoinBtn.interactable = false;
             }
 
-            if (DailyRewardController1.Instance.CanRewardNow() &&
-                !AdmobBannerController.Instance.rewardBasedVideo.IsLoaded())
+            if (DailyRewardController1.Instance.CanRewardNow() && !Advertisements.Instance.IsRewardVideoAvailable())
             {
                 dailyRewardBtnText.text = "WAIT";
                 dailyRewardAnimator.SetTrigger("deactivate");
@@ -75,8 +73,7 @@ public class FreeCoinRewardUI : MonoBehaviour
 
     public void FreeCoinWatchAds()
     {
-        if (DailyRewardController1.Instance.CanRewardNow() &&
-            (AdmobBannerController.Instance.rewardBasedVideo.IsLoaded()))
+        if (DailyRewardController1.Instance.CanRewardNow() && (Advertisements.Instance.IsRewardVideoAvailable()))
         {
             if (DataManager.Instance.FreeAdNumber <= 10 && DataManager.Instance.FreeAdNumber > 0)
             {

@@ -17,7 +17,7 @@ public class AdManagerUnity : MonoBehaviour
 	void Awake()
 	{
 		/*Advertisement.Initialize (gameID, true);*/
-		if (ads != null)
+		/*if (ads != null)
 		{
 			Destroy(gameObject);
 		}
@@ -25,7 +25,7 @@ public class AdManagerUnity : MonoBehaviour
 		{
 			ads = this;
 			DontDestroyOnLoad(gameObject);
-		}
+		}*/
 		/*if (Advertisement.IsReady ("rewardedVideo")) 
 		{
 			//ShowAd("rewardedVideo");
@@ -35,12 +35,14 @@ public class AdManagerUnity : MonoBehaviour
 
 	public void ShowAd(string zone = "")
 	{
+		/*
 		#if UNITY_EDITOR
 		StartCoroutine(WaitForAd ());
 		#endif
 
 		if (string.Equals (zone, ""))
 			zone = null;
+			*/
 
 		/*ShowOptions options = new ShowOptions ();
 		options.resultCallback = AdCallbackhandler;

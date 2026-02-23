@@ -29,7 +29,7 @@ public class Defeat : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (AdmobBannerController.Instance.rewardBasedVideo.IsLoaded()|| LevelManager.CheckBuyHeath==1) {
+		if (Advertisements.Instance.IsRewardVideoAvailable()|| LevelManager.CheckBuyHeath==1) {
 			TakeHeathBtn.interactable = true;
 		}
 		else
@@ -92,21 +92,24 @@ public class Defeat : MonoBehaviour {
 		FXSound.THIS.fxSound.PlayOneShot (FXSound.THIS.ButtonClick);
 		if(TrackingSceneController.THIS.gameState == GameState.AdventureScene)
 		{
-			//ads
-			AdmobBannerController.Instance.ShowInterstitial ();
 			panel_Defeat.SetActive (false);
 			panel_BeforePlay.SetActive (true);
 			FXSound.THIS.GetComponent<AudioSource> ().Stop ();
 			TrackingSceneController.THIS.gameState = GameState.AdventureScene;
+			
+			//ads
+			AdmobBannerController.Instance.ShowInterstitial ();
 		}
 		else if(TrackingSceneController.THIS.gameState == GameState.EndlessScene)
 		{
             //ads
             //GameObject.FindObjectOfType<AdManagerUnity> ().ShowAd ("video");
-            AdmobBannerController.Instance.ShowRewardBasedVideo();
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 			FXSound.THIS.GetComponent<AudioSource> ().Stop ();
 			TrackingSceneController.THIS.gameState = GameState.EndlessScene;
+			
+			AdmobBannerController.Instance.ShowRewardBasedVideo();
 		}
 
 	}
@@ -139,7 +142,7 @@ public class Defeat : MonoBehaviour {
 			// Watch Video To Continue!!
 			// Call Watch UnityAds Method
 			//ads
-			if (AdmobBannerController.Instance.rewardBasedVideo.IsLoaded())
+			if (Advertisements.Instance.IsRewardVideoAvailable())
 			{
 				isTakeHeath=1;
 				FXSound.THIS.fxSound.PlayOneShot (FXSound.THIS.ButtonClick);

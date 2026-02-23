@@ -16,28 +16,33 @@ public class AdmobBannerController : MonoBehaviour
         get { return instance; }
     }
 
-    private BannerView bannerView;
+    /*private BannerView bannerView;
     private InterstitialAd interstitial;
-    public RewardedAd rewardBasedVideo;
+    public RewardedAd rewardBasedVideo;*/
 
     //Insert your ads id here
 
 
+/*
 #if UNITY_IOS
 	public string Admob_Interstitial_ID = "";
 	public string Admob_Banner_ID = "";
 #elif UNITY_ANDROID
     private string Admob_Interstitial_ID = "ca-app-pub-4743633041251613/6636815178";
     private string Admob_Banner_ID = "ca-app-pub-4743633041251613/3080713546";
-#endif
+#endif*/
     public void Awake()
     {
-        /*if (instance == null) {
+        if (instance == null) {
             instance = this;
             DontDestroyOnLoad (gameObject);
         } else if (instance != this) {
             Destroy (gameObject);
         }
+        
+        Advertisements.Instance.Initialize();
+        
+        /*
         this.RequestInterstitial ();
         this.RequestBanner ();
         this.ShowBanner ();
@@ -47,7 +52,7 @@ public class AdmobBannerController : MonoBehaviour
 
     private void InitRewardedVideo()
     {
-        // Get singleton reward based video ad reference.
+        /*// Get singleton reward based video ad reference.
         //this.rewardBasedVideo = rewardBasedVideo.Instance;
 
         // RewardBasedVideoAd is a singleton, so handlers should only be registered once.
@@ -57,16 +62,19 @@ public class AdmobBannerController : MonoBehaviour
         //this.rewardBasedVideo.OnAdStarted += this.HandleRewardBasedVideoStarted;
         this.rewardBasedVideo.OnUserEarnedReward += this.HandleRewardBasedVideoRewarded;
         this.rewardBasedVideo.OnAdClosed += this.HandleRewardBasedVideoClosed;
-        //this.rewardBasedVideo.OnAdLeavingApplication += this.HandleRewardBasedVideoLeftApplication;
+        //this.rewardBasedVideo.OnAdLeavingApplication += this.HandleRewardBasedVideoLeftApplication;*/
     }
 
     public void DestroyBanner()
     {
-        if (this.bannerView != null)
+        /*if (this.bannerView != null)
         {
 //			Debug.Log ("Destroy Banner");
             this.bannerView.Destroy();
-        }
+        }*/
+        
+        if(Advertisements.Instance.IsBannerOnScreen())
+            Advertisements.Instance.HideBanner();
     }
 
     public void RequestRewardBasedVideo()
@@ -86,24 +94,32 @@ public class AdmobBannerController : MonoBehaviour
 
     public void ShowBanner()
     {
-        this.RequestBanner();
+        /*this.RequestBanner();
         if (this.bannerView != null)
         {
             this.RequestBanner();
             this.bannerView.Show();
 //			Debug.Log ("Show Banner");
+        }*/
+        
+        if (Firebase_Analytics.instance != null)
+        {
+            Firebase_Analytics.instance.AnalyticsAdsWatch("Banner", "ShowBanner");
         }
+        
+        Advertisements.Instance.ShowBanner(BannerPosition.BOTTOM,BannerType.Adaptive);
+        
     }
 
     // Returns an ad request with custom ad targeting.
-    private AdRequest CreateAdRequest()
+    /*private AdRequest CreateAdRequest()
     {
         return new AdRequest.Builder().Build();
-    }
+    }*/
 
     public void RequestBanner()
     {
-        if (this.bannerView == null)
+        /*if (this.bannerView == null)
         {
             this.bannerView = new BannerView(Admob_Banner_ID, AdSize.SmartBanner, AdPosition.Bottom);
             // Register for ad events.
@@ -116,12 +132,12 @@ public class AdmobBannerController : MonoBehaviour
             // Load a banner ad.
             this.bannerView.LoadAd(this.CreateAdRequest());
 //			this.HideBanner ();
-        }
+        }*/
     }
 
     public void RequestInterstitial()
     {
-        this.interstitial = new InterstitialAd(Admob_Interstitial_ID);
+        /*this.interstitial = new InterstitialAd(Admob_Interstitial_ID);
         // Register for ad events.
         this.interstitial.OnAdLoaded += this.HandleInterstitialLoaded;
         this.interstitial.OnAdFailedToLoad += this.HandleInterstitialFailedToLoad;
@@ -129,13 +145,13 @@ public class AdmobBannerController : MonoBehaviour
         this.interstitial.OnAdClosed += this.HandleInterstitialClosed;
         //this.interstitial.OnAdLeavingApplication += this.HandleInterstitialLeftApplication;
         // Load an interstitial ad.
-        this.interstitial.LoadAd(this.CreateAdRequest());
+        this.interstitial.LoadAd(this.CreateAdRequest());*/
     }
 
 
     public void ShowInterstitial()
     {
-        if (this.interstitial != null)
+        /*if (this.interstitial != null)
         {
             if (this.interstitial.IsLoaded())
             {
@@ -143,12 +159,22 @@ public class AdmobBannerController : MonoBehaviour
                 RequestInterstitial();
 //				Debug.Log ("Show FullBanner");
             }
+        }*/
+
+        if (Advertisements.Instance.IsInterstitialAvailable())
+        {
+            Advertisements.Instance.ShowInterstitial();
+            
+            if (Firebase_Analytics.instance != null)
+            {
+                Firebase_Analytics.instance.AnalyticsAdsWatch("Interstitial", "ShowInterstitial");
+            }
         }
     }
 
     public void ShowRewardBasedVideo()
     {
-        if (this.rewardBasedVideo.IsLoaded())
+        /*if (this.rewardBasedVideo.IsLoaded())
         {
             this.rewardBasedVideo.Show();
         }
@@ -157,9 +183,57 @@ public class AdmobBannerController : MonoBehaviour
             MonoBehaviour.print("Reward based video ad is not ready yet");
             AdManagerUnity.ads.ShowAd("rewardedVideo");
             RequestRewardBasedVideo();
+        }*/
+
+        if (Advertisements.Instance.IsRewardVideoAvailable())
+        {
+            Advertisements.Instance.ShowRewardedVideo(IsRewarded);
+            
+            if (Firebase_Analytics.instance != null)
+            {
+                Firebase_Analytics.instance.AnalyticsAdsWatch("RewardBasedVideo", "ShowRewardBasedVideo");
+            }
         }
     }
 
+    private void IsRewarded(bool isCompleted)
+    {
+        if (isCompleted)
+        {
+            if (I2.MiniGames.PrizeWheel.checkFreeSpinInt == 1)
+            {
+                GameObject.FindObjectOfType<I2.MiniGames.PrizeWheel>().SpinningCallBackAfterWatchVideoAds();
+                
+                if (Firebase_Analytics.instance != null)
+                {
+                    Firebase_Analytics.instance.AnalyticsAdsWatch("RewardBasedVideo_isCompleted", "checkFreeSpin");
+                }
+            }
+
+            if (FreeCoinRewardUI.isFreeAd == 1)
+            {
+                GameObject.FindObjectOfType<FreeCoinRewardUI>().FreeAdsCallBack();
+                
+                if (Firebase_Analytics.instance != null)
+                {
+                    Firebase_Analytics.instance.AnalyticsAdsWatch("RewardBasedVideo_isCompleted", "Free Coin");
+                }
+            }
+
+            if (Defeat.isTakeHeath == 1)
+            {
+                GameObject.FindObjectOfType<Defeat>().CallBackAfterWatchUnityAds();
+                
+                
+                if (Firebase_Analytics.instance != null)
+                {
+                    Firebase_Analytics.instance.AnalyticsAdsWatch("RewardBasedVideo_isCompleted", "Take Life");
+                }
+            }
+        }
+    }
+
+    /*
     #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
@@ -188,7 +262,8 @@ public class AdmobBannerController : MonoBehaviour
     }
 
     #endregion
-
+*/
+   /*
     #region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
@@ -218,9 +293,9 @@ public class AdmobBannerController : MonoBehaviour
     }
 
     #endregion
-
+*/
     //	#endif
-
+/*
     #region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
@@ -282,4 +357,5 @@ public class AdmobBannerController : MonoBehaviour
     }
 
     #endregion
+    */
 }
