@@ -1,0 +1,54 @@
+/Assets/
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+*.pidb
+*.unityproj
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.booproj
+sysinfo.txt
+*.apk
+*.aab
+*.ipa
+
+# Unity Asset meta files (keep these!)
+# *.meta  <-- DO NOT ignore .meta files in Unity
+
+# Rider / JetBrains
+.idea/
+*.sln
+*.csproj
+*.unityproj
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# Crashes
+crashlytics-build.properties
+crash-symbol-files/
